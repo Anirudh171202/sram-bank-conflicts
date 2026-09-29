@@ -37,19 +37,33 @@ PATTERNS = {
     "block":     [(i // 4, i % 4) for i in range(N)],
 }
 
+# GEMV y = W x on one 16x16 weight tile. Each dataflow is a sequence of 16
+# reads (one per step), each read one cell per lane. All three read every
+# weight exactly once, so they move the same 256 words.
+DATAFLOWS = {
+    # lane i owns output y[i]; step k reads column k
+    "output-stationary": [[(i, k) for i in range(N)] for k in range(N)],
+    # lanes split the dot product; step i reads row i
+    "split-k":           [[(i, j) for j in range(N)] for i in range(N)],
+    # lanes form a 4x4 grid; step s reads one aligned 4x4 block
+    "2d-tiled":          [[(4 * (s // 4) + l // 4, 4 * (s % 4) + l % 4) for l in range(N)]
+                          for s in range(N)],
+}
 
-def addresses(layout, pattern):
+
+def addresses(layout, cells):
     place, _ = LAYOUTS[layout]
-    return [place(r, c) for r, c in PATTERNS[pattern]]
+    return [place(r, c) for r, c in cells]
 
 
-def banks(layout, pattern):
+def banks(layout, cells):
     _, select = LAYOUTS[layout]
-    return [BANK_SELECT[select](a) for a in addresses(layout, pattern)]
+    return [BANK_SELECT[select](a) for a in addresses(layout, cells)]
 
 
-def reference_cycles(layout, pattern):
-    return max(Counter(banks(layout, pattern)).values())
+def reference_cycles(layout, cells):
+    """Cycles for one read: the number of lanes on the busiest bank."""
+    return max(Counter(banks(layout, cells)).values())
 
 
 def bank_map(layout):
@@ -59,6 +73,12 @@ def bank_map(layout):
 
 
 if __name__ == "__main__":
-    print(f"{'':10}" + "".join(f"{p:>11}" for p in PATTERNS))
+    print(f"{'':13}" + "".join(f"{p:>11}" for p in PATTERNS))
     for layout in LAYOUTS:
-        print(f"{layout:10}" + "".join(f"{reference_cycles(layout, p):>11}" for p in PATTERNS))
+        print(f"{layout:13}" + "".join(
+            f"{reference_cycles(layout, cells):>11}" for cells in PATTERNS.values()))
+    print(f"\nGEMV tile{'':4}" + "".join(f"{d:>19}" for d in DATAFLOWS))
+    for layout in LAYOUTS:
+        print(f"{layout:13}" + "".join(
+            f"{sum(reference_cycles(layout, read) for read in steps):>19}"
+            for steps in DATAFLOWS.values()))

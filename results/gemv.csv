@@ -1,0 +1,16 @@
+layout,dataflow,bytes,rtl_cycles,ref_cycles
+row-major,output-stationary,1024,256,256
+row-major,split-k,1024,16,16
+row-major,2d-tiled,1024,64,64
+padded,output-stationary,1024,16,16
+padded,split-k,1024,16,16
+padded,2d-tiled,1024,64,64
+swizzled,output-stationary,1024,16,16
+swizzled,split-k,1024,16,16
+swizzled,2d-tiled,1024,64,64
+block-cyclic,output-stationary,1024,64,64
+block-cyclic,split-k,1024,64,64
+block-cyclic,2d-tiled,1024,16,16
+prime-17,output-stationary,1024,16,16
+prime-17,split-k,1024,16,16
+prime-17,2d-tiled,1024,64,64
