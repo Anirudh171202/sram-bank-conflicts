@@ -1,0 +1,16 @@
+layout,dataflow,bytes,summed_estimate_cycles,busiest_bank_estimate_cycles,rtl_cycles,bytes_per_cycle,pct_of_estimate
+row-major,output-stationary,1024,16,256,256,4.0,6.2
+row-major,split-k,1024,16,16,16,64.0,100.0
+row-major,2d-tiled,1024,16,64,64,16.0,25.0
+padded,output-stationary,1024,16,16,16,64.0,100.0
+padded,split-k,1024,16,16,16,64.0,100.0
+padded,2d-tiled,1024,16,64,64,16.0,25.0
+swizzled,output-stationary,1024,16,16,16,64.0,100.0
+swizzled,split-k,1024,16,16,16,64.0,100.0
+swizzled,2d-tiled,1024,16,64,64,16.0,25.0
+block-cyclic,output-stationary,1024,16,64,64,16.0,25.0
+block-cyclic,split-k,1024,16,64,64,16.0,25.0
+block-cyclic,2d-tiled,1024,16,16,16,64.0,100.0
+prime-17,output-stationary,1024,16,16,16,64.0,100.0
+prime-17,split-k,1024,16,16,16,64.0,100.0
+prime-17,2d-tiled,1024,16,64,64,16.0,25.0
