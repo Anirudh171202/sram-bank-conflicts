@@ -5,7 +5,7 @@
 // takes as many cycles as its most-loaded bank has lanes.
 //
 // Word address -> (bank, slot) comes from bank_select, chosen by MODE
-// (0 slice, 1 xor, 2 block, 3 mod17). MODE 3 uses 17 banks, the rest 16.
+// (0 slice, 1 xor, 2 block, 3 mod17, 4 rotxor). MODE 3 uses 17 banks, the rest 16.
 
 module banked_sram #(
   parameter int LANES = 16,

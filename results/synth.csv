@@ -3,5 +3,6 @@ bank_select_slice,0
 bank_select_xor,4
 bank_select_block,0
 bank_select_mod17,83
+bank_select_rotxor,4
 bank_arbiter,1127
 bank_arbiter_17,1234

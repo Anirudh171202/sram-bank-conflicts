@@ -14,3 +14,6 @@ block-cyclic,2d-tiled,1024,16,16
 prime-17,output-stationary,1024,16,16
 prime-17,split-k,1024,16,16
 prime-17,2d-tiled,1024,64,64
+rotated-xor,output-stationary,1024,16,16
+rotated-xor,split-k,1024,16,16
+rotated-xor,2d-tiled,1024,16,16

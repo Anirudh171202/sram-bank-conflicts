@@ -18,6 +18,7 @@ LAYOUTS = {
     "swizzled":  (lambda r, c: N * r + c,       "xor"),
     "block-cyclic": (lambda r, c: N * r + c,    "block"),
     "prime-17":  (lambda r, c: N * r + c,       "mod17"),
+    "rotated-xor": (lambda r, c: N * r + c,     "rotxor"),
 }
 
 BANK_SELECT = {
@@ -25,6 +26,7 @@ BANK_SELECT = {
     "xor":   lambda a: (a & 0xF) ^ ((a >> 4) & 0xF),
     "block": lambda a: (((a >> 4) & 0x3) << 2) | (a & 0x3),
     "mod17": lambda a: a % 17,
+    "rotxor": lambda a: (a & 0xF) ^ ((((a >> 4) & 0x3) << 2) | ((a >> 6) & 0x3)),
 }
 MODE = {name: i for i, name in enumerate(BANK_SELECT)}
 

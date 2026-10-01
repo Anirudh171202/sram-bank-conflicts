@@ -9,7 +9,7 @@ mkdir -p results
 out=results/synth.csv
 echo "module,cells" > "$out"
 
-for top in bank_select_slice bank_select_xor bank_select_block bank_select_mod17 bank_arbiter; do
+for top in bank_select_slice bank_select_xor bank_select_block bank_select_mod17 bank_select_rotxor bank_arbiter; do
   n=$(yosys -q -p "read_verilog -sv rtl/bank_select.sv rtl/banked_sram.sv; synth -top $top; tee -o /dev/stdout stat" \
       | awk '/ cells$/ {print $1; exit}')
   n=${n:-0}  # yosys omits the cells line for pure-wire modules

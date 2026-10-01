@@ -24,3 +24,8 @@ prime-17,column,64,1,1
 prime-17,diagonal,64,16,16
 prime-17,anti-diag,64,1,1
 prime-17,block,64,4,4
+rotated-xor,row,64,1,1
+rotated-xor,column,64,1,1
+rotated-xor,diagonal,64,4,4
+rotated-xor,anti-diag,64,4,4
+rotated-xor,block,64,1,1

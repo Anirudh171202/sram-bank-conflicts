@@ -48,7 +48,19 @@ module bank_select_mod17 (
   assign slot = addr[8:4];
 endmodule
 
-// Picks one of the above. MODE: 0 slice, 1 xor, 2 block, 3 mod17.
+// Rotated swizzle: same 4 XOR gates as bank_select_xor, but the row bits are
+// rotated by 2 before the XOR, so the low row bits reach the high bank bits.
+// Found by xor_search.py: conflict-free for all three GEMV dataflows.
+module bank_select_rotxor (
+  input  logic [8:0] addr,
+  output logic [4:0] bank,
+  output logic [4:0] slot
+);
+  assign bank = {1'b0, addr[3:0] ^ {addr[5:4], addr[7:6]}};
+  assign slot = addr[8:4];
+endmodule
+
+// Picks one of the above. MODE: 0 slice, 1 xor, 2 block, 3 mod17, 4 rotxor.
 module bank_select #(
   parameter int MODE = 0
 ) (
@@ -62,6 +74,7 @@ module bank_select #(
       1: bank_select_xor   u (.addr, .bank, .slot);
       2: bank_select_block u (.addr, .bank, .slot);
       3: bank_select_mod17 u (.addr, .bank, .slot);
+      4: bank_select_rotxor u (.addr, .bank, .slot);
     endcase
   endgenerate
 endmodule
