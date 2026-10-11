@@ -1,4 +1,4 @@
-# Same bytes, different time
+# Where hardware performance models are lacking
 
 Hardware performance models like [Timeloop](https://timeloop.csail.mit.edu/) and
 [Interstellar](https://arxiv.org/abs/1809.04070) estimate how fast a memory level is by counting how much
@@ -13,7 +13,7 @@ says 16 every time.
 
 <sub>[Full-quality video](docs/same_data.mp4)</sub>
 
-## The setup, briefly
+## The setup
 
 On-chip SRAM in accelerators and GPUs (shared memory on NVIDIA, for example) isn't one big array. It's split
 into banks, here 16, and each bank can return one word per cycle. When 16 lanes read at once, the read
